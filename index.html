@@ -577,11 +577,180 @@
         padding:12px 26px; border-radius:20px; cursor:pointer;
     }
 
+    /* ---------- AUTH (LOGIN / KREYE KONT) ---------- */
+    #authPage{
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+    }
+    .auth-hero{
+        background:var(--navy);
+        color:#F4EFE3;
+        padding:40px 24px 30px;
+        border-radius:0 0 24px 24px;
+        text-align:center;
+    }
+    .auth-hero .logo-badge{
+        width:56px;height:56px;border-radius:50%;
+        background:#EFE1C4;margin:0 auto 12px;
+        box-shadow:0 2px 6px rgba(0,0,0,0.35), 0 0 0 2px rgba(244,239,227,0.5);
+        display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+    }
+    .auth-hero .wordmark{
+        font-size:1.5rem;font-weight:800;font-style:italic;color:#F4EFE3;
+    }
+    .auth-hero .wordmark .o{ color:var(--orange); }
+    .auth-hero .wordmark .eats{ color:var(--gold); }
+    .auth-hero p{
+        margin-top:6px;font-size:0.75rem;opacity:0.85;font-weight:600;
+    }
+    .auth-body{
+        flex:1 1 auto;
+        padding:24px 22px 30px;
+        display:flex;
+        flex-direction:column;
+    }
+    .auth-tabs{
+        display:flex;
+        background:var(--card);
+        border-radius:14px;
+        padding:4px;
+        box-shadow:0 0 0 1px var(--border);
+        margin-bottom:22px;
+    }
+    .auth-tab{
+        flex:1;
+        text-align:center;
+        padding:10px 0;
+        font-size:0.75rem;
+        font-weight:800;
+        letter-spacing:0.3px;
+        text-transform:uppercase;
+        color:var(--muted);
+        border-radius:11px;
+        cursor:pointer;
+        transition:all .15s ease;
+    }
+    .auth-tab.active{
+        background:var(--navy);
+        color:#F4EFE3;
+    }
+    .auth-form{ display:none; flex-direction:column; gap:14px; }
+    .auth-form.active{ display:flex; }
+    .auth-field label{
+        display:block;
+        font-size:0.68rem;
+        font-weight:700;
+        letter-spacing:0.3px;
+        text-transform:uppercase;
+        color:var(--navy);
+        margin-bottom:6px;
+    }
+    .auth-field input{
+        width:100%;
+        padding:12px 14px;
+        border-radius:12px;
+        border:1px solid var(--border);
+        background:var(--card);
+        font-size:0.85rem;
+        color:var(--text);
+        font-family:inherit;
+    }
+    .auth-field input:focus{
+        outline:none;
+        border-color:var(--orange);
+    }
+    .auth-error{
+        font-size:0.7rem;
+        font-weight:700;
+        color:#C0392B;
+        display:none;
+    }
+    .auth-error.show{ display:block; }
+    .auth-submit{
+        margin-top:6px;
+        border:none;
+        background:var(--orange);
+        color:#fff;
+        font-weight:800;
+        font-size:0.8rem;
+        letter-spacing:0.3px;
+        text-transform:uppercase;
+        padding:14px;
+        border-radius:14px;
+        cursor:pointer;
+    }
+    .auth-submit:active{ background:var(--orange-dark); }
+    .auth-switch{
+        text-align:center;
+        margin-top:16px;
+        font-size:0.75rem;
+        color:var(--muted);
+        font-weight:600;
+    }
+    .auth-switch span{
+        color:var(--orange);
+        font-weight:800;
+        cursor:pointer;
+    }
+
 </style>
 </head>
 <body>
 
-<div class="app">
+<div class="app" id="authPage">
+    <div class="auth-hero">
+        <div class="logo-badge">🍽️</div>
+        <div class="wordmark">KAP<span class="o">E</span><span class="eats">ATS</span></div>
+        <p>Livrezon manje nan Kap Ayisyen</p>
+    </div>
+    <div class="auth-body">
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Konekte</div>
+            <div class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Kreye Kont</div>
+        </div>
+
+        <form class="auth-form active" id="loginForm" onsubmit="return handleLogin(event)">
+            <div class="auth-field">
+                <label>Telefòn oswa Imèl</label>
+                <input type="text" id="loginId" required>
+            </div>
+            <div class="auth-field">
+                <label>Modpas</label>
+                <input type="password" id="loginPass" required>
+            </div>
+            <div class="auth-error" id="loginError">Enfòmasyon yo pa kòrèk.</div>
+            <button class="auth-submit" type="submit">Konekte</button>
+        </form>
+
+        <form class="auth-form" id="signupForm" onsubmit="return handleSignup(event)">
+            <div class="auth-field">
+                <label>Non Konplè</label>
+                <input type="text" id="suName" required>
+            </div>
+            <div class="auth-field">
+                <label>Telefòn</label>
+                <input type="tel" id="suPhone" required>
+            </div>
+            <div class="auth-field">
+                <label>Adrès Livrezon</label>
+                <input type="text" id="suAddress" placeholder="Katye, wout, referans..." required>
+            </div>
+            <div class="auth-field">
+                <label>Modpas</label>
+                <input type="password" id="suPass" required>
+            </div>
+            <div class="auth-error" id="signupError">Tanpri ranpli tout chan yo.</div>
+            <button class="auth-submit" type="submit">Kreye Kont</button>
+        </form>
+
+        <div class="auth-switch" id="authSwitch">
+            Ou pa gen kont? <span onclick="switchAuthTab('signup')">Kreye youn</span>
+        </div>
+    </div>
+</div>
+
+<div class="app" id="mainApp" style="display:none;">
 
     <main id="homeMain">
     <header>
@@ -782,6 +951,65 @@
 
 
 <script>
+    function switchAuthTab(tab){
+        document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+        document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+        document.getElementById('loginForm').classList.toggle('active', tab==='login');
+        document.getElementById('signupForm').classList.toggle('active', tab==='signup');
+        document.getElementById('authSwitch').innerHTML = tab==='login'
+            ? 'Ou pa gen kont? <span onclick="switchAuthTab(\'signup\')">Kreye youn</span>'
+            : 'Ou gen kont deja? <span onclick="switchAuthTab(\'login\')">Konekte</span>';
+    }
+
+    function enterApp(){
+        document.getElementById('authPage').style.display = 'none';
+        document.getElementById('mainApp').style.display = '';
+        window.scrollTo(0,0);
+    }
+
+    function handleLogin(e){
+        e.preventDefault();
+        const id = document.getElementById('loginId').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        const err = document.getElementById('loginError');
+        const users = JSON.parse(localStorage.getItem('kapeats_users') || '{}');
+        const user = users[id];
+        if(!user || user.pass !== pass){
+            err.classList.add('show');
+            return false;
+        }
+        err.classList.remove('show');
+        localStorage.setItem('kapeats_current', id);
+        enterApp();
+        return false;
+    }
+
+    function handleSignup(e){
+        e.preventDefault();
+        const name = document.getElementById('suName').value.trim();
+        const phone = document.getElementById('suPhone').value.trim();
+        const address = document.getElementById('suAddress').value.trim();
+        const pass = document.getElementById('suPass').value.trim();
+        const err = document.getElementById('signupError');
+        if(!name || !phone || !address || !pass){
+            err.textContent = 'Tanpri ranpli tout chan yo.';
+            err.classList.add('show');
+            return false;
+        }
+        const users = JSON.parse(localStorage.getItem('kapeats_users') || '{}');
+        if(users[phone]){
+            err.textContent = 'Yon kont deja egziste ak telefòn sa a.';
+            err.classList.add('show');
+            return false;
+        }
+        users[phone] = { name, phone, address, pass };
+        localStorage.setItem('kapeats_users', JSON.stringify(users));
+        localStorage.setItem('kapeats_current', phone);
+        err.classList.remove('show');
+        enterApp();
+        return false;
+    }
+
     function openRestaurant(){
         document.getElementById('homeMain').style.display = 'none';
         document.getElementById('homeNav').style.display = 'none';
