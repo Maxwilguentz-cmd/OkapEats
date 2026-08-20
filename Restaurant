@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boucanier — OkapEats</title>
+<style>
+    :root{
+        --navy:#1B2A4A;
+        --navy-light:#2A3F66;
+        --cream:#F5EFE3;
+        --card:#FFFFFF;
+        --orange:#E8734A;
+        --orange-dark:#D4602F;
+        --gold:#F5A623;
+        --text:#25324A;
+        --muted:#8A8F9C;
+        --border:#ECE5D6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+        font-family:'Helvetica Neue', Arial, sans-serif;
+        background:#EAE2D2;
+        color:var(--text);
+        display:flex;
+        justify-content:center;
+        min-height:100vh;
+    }
+    .app{
+        width:100%;
+        max-width:460px;
+        background:var(--cream);
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        position:relative;
+        box-shadow:0 0 60px rgba(0,0,0,0.15);
+    }
+    main{ flex:1 1 auto; padding-bottom:90px; }
+
+    /* ---------- HERO / HEADER ---------- */
+    .hero{
+        position:relative;
+        height:190px;
+        background:linear-gradient(150deg,#3E2C1D,#1B2A4A);
+        overflow:hidden;
+    }
+    .hero::after{
+        content:'';
+        position:absolute; inset:0;
+        background:linear-gradient(180deg, rgba(10,16,28,0.05) 0%, rgba(8,12,22,0.75) 100%);
+    }
+    .back-btn{
+        position:absolute; top:16px; left:16px; z-index:5;
+        width:36px; height:36px; border-radius:50%;
+        background:rgba(0,0,0,0.35);
+        color:#fff;
+        display:flex; align-items:center; justify-content:center;
+        font-size:1.2rem;
+        cursor:pointer;
+        border:none;
+    }
+    .hero-info{
+        position:absolute; left:18px; right:18px; bottom:14px; z-index:2; color:#fff;
+    }
+    .hero-info h1{
+        font-size:1.3rem; font-weight:800; text-shadow:0 2px 6px rgba(0,0,0,0.5);
+    }
+    .hero-info .tag{
+        font-size:0.72rem; font-weight:700; letter-spacing:0.4px; text-transform:uppercase;
+        color:var(--gold); margin-top:3px;
+    }
+    .meta-row{
+        display:flex; align-items:center; gap:14px;
+        padding:12px 18px; background:var(--card);
+        border-bottom:1px solid var(--border);
+        font-size:0.75rem; color:var(--muted); font-weight:600;
+    }
+    .meta-row span{ display:flex; align-items:center; gap:4px; }
+    .meta-row .star{ color:var(--gold); }
+
+    /* ---------- CATEGORY TABS ---------- */
+    .tabs{
+        display:flex; gap:8px; overflow-x:auto; padding:14px 18px;
+        scrollbar-width:none;
+    }
+    .tabs::-webkit-scrollbar{ display:none; }
+    .tab{
+        flex:0 0 auto; padding:7px 14px; border-radius:20px;
+        font-size:0.72rem; font-weight:700; letter-spacing:0.2px;
+        background:var(--card); border:1px solid var(--border); color:var(--text);
+        cursor:pointer; white-space:nowrap; transition:.15s ease;
+    }
+    .tab.active{ background:var(--navy); color:#F4EFE3; border-color:var(--navy); }
+
+    /* ---------- MENU ---------- */
+    section.menu{ padding:4px 18px 10px; }
+    .cat-title{
+        font-size:0.98rem; font-weight:800; color:var(--navy);
+        margin:16px 0 10px;
+    }
+    .item{
+        display:flex; gap:12px; background:var(--card);
+        border-radius:14px; padding:10px; border:1px solid var(--border);
+        margin-bottom:12px;
+    }
+    .item-thumb{
+        width:70px; height:70px; border-radius:10px; flex:0 0 auto;
+        background:linear-gradient(150deg,#E8C989,#C9994D);
+        display:flex; align-items:center; justify-content:center;
+        font-size:1.6rem;
+    }
+    .item-info{ flex:1; min-width:0; display:flex; flex-direction:column; justify-content:space-between;}
+    .item-name{ font-weight:800; font-size:0.86rem; color:var(--navy); }
+    .item-desc{ font-size:0.68rem; color:var(--muted); margin-top:2px; line-height:1.3; }
+    .item-bottom{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+    .item-price{ font-weight:800; color:var(--orange-dark); font-size:0.85rem; }
+
+    .qty-controls{ display:flex; align-items:center; gap:8px; }
+    .qty-btn{
+        width:26px; height:26px; border-radius:50%; border:none;
+        background:var(--orange); color:#fff; font-size:1rem; font-weight:800;
+        display:flex; align-items:center; justify-content:center; cursor:pointer;
+    }
+    .qty-btn.remove{ background:var(--border); color:var(--navy); }
+    .qty-val{ font-weight:800; min-width:14px; text-align:center; font-size:0.85rem; }
+    .add-btn{
+        border:none; background:var(--navy); color:#F4EFE3; font-weight:700;
+        font-size:0.68rem; letter-spacing:0.3px; text-transform:uppercase;
+        padding:7px 12px; border-radius:20px; cursor:pointer;
+    }
+
+    /* ---------- CART BAR ---------- */
+    .cart-bar{
+        position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+        width:100%; max-width:460px;
+        background:var(--orange); color:#fff;
+        padding:14px 18px; display:none;
+        align-items:center; justify-content:space-between;
+        border-radius:16px 16px 0 0;
+        box-shadow:0 -4px 14px rgba(0,0,0,0.2);
+        cursor:pointer; z-index:20;
+    }
+    .cart-bar.show{ display:flex; }
+    .cart-bar .left{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:0.85rem; }
+    .cart-count{
+        background:#fff; color:var(--orange-dark); border-radius:50%;
+        width:24px; height:24px; display:flex; align-items:center; justify-content:center;
+        font-size:0.78rem; font-weight:800;
+    }
+    .cart-bar .right{ font-weight:800; font-size:0.9rem; }
+</style>
+</head>
+<body>
+
+<div class="app">
+    <main>
+        <div class="hero">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="hero-info">
+                <h1>Boucanier</h1>
+                <div class="tag">Griyad &amp; Fwi Lanmè</div>
+            </div>
+        </div>
+
+        <div class="meta-row">
+            <span><span class="star">★</span> 4.7</span>
+            <span>🛵 Frè 153 G</span>
+            <span>⏱️ 25–35 min</span>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-cat="Popilè">Popilè</div>
+            <div class="tab" data-cat="Griyad">Griyad</div>
+            <div class="tab" data-cat="Fwi Lanmè">Fwi Lanmè</div>
+            <div class="tab" data-cat="Bwason">Bwason</div>
+        </div>
+
+        <section class="menu" id="menuList"></section>
+    </main>
+
+    <div class="cart-bar" id="cartBar" onclick="alert('Pwochèn etap: paj checkout')">
+        <div class="left">
+            <span class="cart-count" id="cartCount">0</span>
+            Wè panye a
+        </div>
+        <div class="right" id="cartTotal">0 G</div>
+    </div>
+</div>
+
+<script>
+    const menuData = [
+        { id:1, cat:"Popilè", name:"Griyo ak Bannann", desc:"Vyann kochon fri, bannann peze, pikliz", price:350, icon:"🍖" },
+        { id:2, cat:"Popilè", name:"Tasso Kabrit", desc:"Vyann kabrit boukannen, diri kole", price:400, icon:"🐐" },
+        { id:3, cat:"Griyad", name:"Poul Boukannen", desc:"Poul griye ak sòs pikan lokal", price:300, icon:"🍗" },
+        { id:4, cat:"Griyad", name:"Griyo Konplè", desc:"Griyo, diri, pwa, salad", price:375, icon:"🍽️" },
+        { id:5, cat:"Fwi Lanmè", name:"Lambi nan Sòs", desc:"Lambi nan sòs kreyòl, bannann", price:450, icon:"🦪" },
+        { id:6, cat:"Fwi Lanmè", name:"Pwason Gwo Sèl", desc:"Pwason antye griye, sòs ti malis", price:500, icon:"🐟" },
+        { id:7, cat:"Bwason", name:"Jus Grenadya", desc:"Fre, san sik ajoute", price:75, icon:"🥤" },
+        { id:8, cat:"Bwason", name:"Kola Kanpèch", desc:"Bwason lokal byen fre", price:60, icon:"🧃" },
+    ];
+
+    const cart = {};
+
+    function renderMenu(filter){
+        const list = document.getElementById('menuList');
+        list.innerHTML = '';
+        const cats = filter ? [filter] : [...new Set(menuData.map(i=>i.cat))];
+        cats.forEach(cat=>{
+            const items = menuData.filter(i=>i.cat===cat);
+            if(!items.length) return;
+            const h = document.createElement('div');
+            h.className='cat-title';
+            h.textContent = cat;
+            list.appendChild(h);
+            items.forEach(item=>{
+                const qty = cart[item.id] || 0;
+                const el = document.createElement('div');
+                el.className='item';
+                el.innerHTML = `
+                    <div class="item-thumb">${item.icon}</div>
+                    <div class="item-info">
+                        <div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-desc">${item.desc}</div>
+                        </div>
+                        <div class="item-bottom">
+                            <div class="item-price">${item.price} G</div>
+                            <div id="ctrl-${item.id}">
+                                ${qty>0 ? qtyControlsHtml(item.id, qty) : `<button class="add-btn" onclick="addItem(${item.id})">Ajoute</button>`}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(el);
+            });
+        });
+    }
+
+    function qtyControlsHtml(id, qty){
+        return `<div class="qty-controls">
+            <button class="qty-btn remove" onclick="removeItem(${id})">−</button>
+            <span class="qty-val">${qty}</span>
+            <button class="qty-btn" onclick="addItem(${id})">+</button>
+        </div>`;
+    }
+
+    function addItem(id){
+        cart[id] = (cart[id]||0)+1;
+        updateItemControls(id);
+        updateCartBar();
+    }
+    function removeItem(id){
+        if(!cart[id]) return;
+        cart[id]--;
+        if(cart[id]<=0) delete cart[id];
+        updateItemControls(id);
+        updateCartBar();
+    }
+    function updateItemControls(id){
+        const holder = document.getElementById('ctrl-'+id);
+        const qty = cart[id]||0;
+        holder.innerHTML = qty>0 ? qtyControlsHtml(id, qty) : `<button class="add-btn" onclick="addItem(${id})">Ajoute</button>`;
+    }
+    function updateCartBar(){
+        const bar = document.getElementById('cartBar');
+        const count = Object.values(cart).reduce((a,b)=>a+b,0);
+        const total = Object.entries(cart).reduce((sum,[id,qty])=>{
+            const item = menuData.find(m=>m.id==id);
+            return sum + item.price*qty;
+        },0);
+        document.getElementById('cartCount').textContent = count;
+        document.getElementById('cartTotal').textContent = total + ' G';
+        bar.classList.toggle('show', count>0);
+    }
+
+    document.querySelectorAll('.tab').forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+            document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+            tab.classList.add('active');
+            renderMenu(tab.dataset.cat === "Popilè" ? null : tab.dataset.cat);
+        });
+    });
+
+    renderMenu(null);
+</script>
+
+</body>
+</html>
