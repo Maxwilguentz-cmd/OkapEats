@@ -577,6 +577,73 @@
         padding:12px 26px; border-radius:20px; cursor:pointer;
     }
 
+    /* ---------- PAJ KONT (ACCOUNT) ---------- */
+    #accountPage{ display:none; }
+    #accountPage main{ flex:1 1 auto; padding-bottom:40px; }
+    .ac-header{
+        display:flex; align-items:center; gap:12px;
+        padding:16px 18px; background:var(--navy); color:#F4EFE3;
+    }
+    .ac-header h1{ font-size:1.05rem; font-weight:800; }
+    .ac-back-btn{
+        width:36px; height:36px; border-radius:50%;
+        background:rgba(255,255,255,0.15);
+        color:#fff; border:none; font-size:1.15rem;
+        display:flex; align-items:center; justify-content:center;
+        cursor:pointer; flex:0 0 auto;
+    }
+    .ac-avatar-wrap{
+        display:flex; flex-direction:column; align-items:center;
+        padding:26px 18px 10px;
+    }
+    .ac-avatar{
+        width:76px; height:76px; border-radius:50%;
+        background:linear-gradient(150deg,var(--orange),var(--gold));
+        color:#fff; font-size:1.8rem; font-weight:800;
+        display:flex; align-items:center; justify-content:center;
+        box-shadow:0 4px 14px rgba(27,42,74,0.18);
+    }
+    .ac-avatar-wrap .ac-name{
+        margin-top:12px; font-size:1.05rem; font-weight:800; color:var(--navy);
+    }
+    .ac-avatar-wrap .ac-sub{
+        font-size:0.72rem; color:var(--muted); font-weight:600; margin-top:2px;
+    }
+    .ac-card{
+        margin:14px 18px 0; background:var(--card); border:1px solid var(--border);
+        border-radius:14px; overflow:hidden;
+    }
+    .ac-row{
+        display:flex; align-items:center; gap:12px;
+        padding:14px 16px; border-bottom:1px solid var(--border);
+    }
+    .ac-row:last-child{ border-bottom:none; }
+    .ac-row .ac-icon{
+        width:34px; height:34px; border-radius:10px;
+        background:var(--cream); display:flex; align-items:center; justify-content:center;
+        font-size:1rem; flex:0 0 auto;
+    }
+    .ac-row .ac-field{ flex:1; min-width:0; }
+    .ac-row .ac-label{
+        font-size:0.62rem; font-weight:700; letter-spacing:0.3px; text-transform:uppercase;
+        color:var(--muted);
+    }
+    .ac-row .ac-value{
+        font-size:0.86rem; font-weight:700; color:var(--navy); margin-top:2px;
+        word-break:break-word;
+    }
+    .ac-row .ac-toggle{
+        border:none; background:none; color:var(--orange); font-size:0.68rem;
+        font-weight:800; letter-spacing:0.3px; text-transform:uppercase; cursor:pointer;
+        flex:0 0 auto;
+    }
+    .ac-logout-btn{
+        margin:22px 18px 0; width:calc(100% - 36px);
+        border:none; background:#C0392B; color:#fff; font-weight:800;
+        font-size:0.8rem; letter-spacing:0.3px; text-transform:uppercase;
+        padding:14px; border-radius:14px; cursor:pointer;
+    }
+
     /* ---------- AUTH (LOGIN / KREYE KONT) ---------- */
     #authPage{
         min-height:100vh;
@@ -864,7 +931,7 @@
         <div class="nav-item">
             <span class="icon">📍</span>Around me
         </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="openAccount()">
             <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAASW0lEQVR4nO2deXRURb7Hq+rem77d2Tu9JR2yesAk7wlkkTTqGzYDEoc9i4BnBgL6BHl4zps/nk+UmXcYmTPiPyBuBM+ccQEJIuAGAR1JgolMgmIkGUGSEOgknTRLpzu93aXeHyU9EbJ0d9J9g3M/h7/S91b9bn1/9au9gBhjICMdSGoD/tWRBZAYWQCJkQWQGFkAiZEFkBhZAImRBZAYWQCJkQWQGFkAiZEFkBhZAImRBZAYWQCJkQWQGFkAiZEFkBhZAImRBZAYWQCJkQWQGFkAiZEFkBhZAImRBZAYWQCJkQWQGFpqA4Lkzj3FEEJJLBkjd4kAGIsYY4wBxhBCiNCdxY0xxqKIMQYQQggRhOBukARO5O3pP5UpABRF3fYTz/Met4fjOQAAQzMKVkHTtzuTIAgQgCHVmjhMUAEwxqIo+spdFMW2traW8+dbW1o7OjosFovNZnM7nTzPAwBommZVqtjYWL1en5aWlpWdlZ2Tk5GRgdBPLZwgCGiiyjDhBBhc9DzPf93QcKL6xNcNDe1tbTdv3HB7PKIgYAwg/Kdr3wo+AEKAKEqhUMTHx6dnZMwoLHy46OEZhYWkckxMGSaWAIIgkKLv6ek5WFV19PCRH1pb7Q6HKIo0TUfHxOj0eqPRaExK0ul0MXGxrIIFALg97v6btt7eXnNXl9ls7rVY7P39PM8jhKKjoqZkZS1asnhFSYnBYBicxQRhogggiiKJGL29vXvefPPggSrz1auCINA0nZSUlJufP/OBmXl5eekZGbGxsSOkY7PZ2tvampqavjr91dnGxq6uLp7jKZpKTk5eXlqy/okndDrd4OwkZ0IIQLwSY7y3cu9ru3df6ewEGCtVqvyCgmXLl899eB5x3p/AWBBFgAEG/7QcAgggoBAa3PPp6en5/MTJQx980Pj3vzudTgBhSkrKUxs3VqyrgBBOlKqAJUUURZ7nMcYt51uWLlqsT9AYEjSTEpNWr1xV8+Up32OCIPA8LwiCKIqjJuh72PfHmi9PrV65alJikiFBo0/QLF20uOV8C8aY5/lREww1UgogiiL5/vfeeXdKRmaiRmtI0BbNmVt9/LjvgeHKiBS0j+GeGfz6iePHi+bMNSRoEzXaKRmZ773z7mAbpEIyAXyf/fyWLXqN1qg3pCZP2v7ii263G2MsCILAC0O+dZt3+yCOP2RpCrxAXnG73dtffDE1eZJRb9BrtM9v2XKbMeFHGgGI13m93ifWrdfGq416Q0FuXk1NDfmVBKU7GVzuDofj4oWLjY2NjY2NFy9cdDgcQz42GF+yNTU1Bbl5Rr1BG69+Yt16r9eLpdNAAgFIrfd6vL95/HGtOiFRq1tU/KjZbMYYcxw3XEGQ4hME4eOPPlpfsW5GfkFmalqyITHZkJiZmjYjv2B9xbqPP/qIlP5wEoqiyHEcxthsNi8qfjRRq9OpE37z+ONej1eqWBRuAXxx+cn163XqBINWt3rlKqfTiYcvNXzLqetqaxcUFWnVCTp1QkqSMTM17Z609HvS0jNT01KSjDp1gladsKCoqK62Fg9fD3wZOZ3O1StXGbQ6nTrhyfXrR2hvQkq4BSAfv/X5FzTx6kStbvXKVSQCjFBegsBjjHft3JWo0yfp9FMyMidnZJJy9/27Jy19ckbmlIzMJJ0+UafftXOX78Vh0hQwxl6vd/XKVYlanSZevfX5F/CIThAiwjoOIF3vA/vf3/T00wxN5+Xl7z94QKlUjjAsIq+8vGPHtj/8n0ajQQgJgjBCFhRFiaJotVq3bH3hv3/3uxE6+yRTl8tVvqKkqamJ4/ldr7xSWl4W5vFB+AQgH3zhhwu/XrjQ6XQmJiYe/fQTg8EwaukfOXxk7W9/q0lIIPFh1IwghAgh67Vrb/3lL4uXLB5Vg56enkULi7u7u1Uq1Ueffjp5yuRwjpPDJAAGgEzWly5fUX/6NKNQ7D9wwDTTNELpEMOsVmvR7Lk3bt6IiIgQRdHP7BBCXq83Pi6++m+fazQaMPxyDTGg/qv68tJSzuMxPfDAgQ8OEgmD+tCACVM2oiAghN7+69t1tbUixk9v2mSaaeJ5foTKLooihPCtysrOK50sy/pf+uRdlmU7r3S+VVkJIRzhXYqieJ43zTQ9vWmTiHFdbe3bf3171EA3joSjBpAsrl27VjRvXtdV89SpU49++glD0yMslWCMIYTOAee8WbPNXeaIiIhA7YQQer3eJKPx5Jd/i1SpSILD5YVFkeP5RQuLz507l5RsrD55MiEhAYRlmTMcNYD4cuWePVc7rzAM8+xzzykUCjzi5xGf/fbbby5fvqxQKILwEoyxQqHo7Lj87Tff+BIcEgghBkChUDz73HMMw1ztvFK5Z8/I9WYcCbkAGGOKovr6+t7ftx9jPGvunFlzZg9e7RruLQBAc3Ozx+sJOhwjhDxez/fNzWCoRfzBkL7TrDmzZ8+ZAzB+f99+q9VKJmiDyzoAI0OdAfGjg1VV5itXVSrVhg0bwGjF4aOrq2uMuUMAurq6/XmSmPTUxg0Klcp85WrVgQNgxHozXoRWAIwxQojjuMOHPhQEvqCgoNBkInVi5BdJdHK7PQBCEKwbYowBhG63G/gRzYm/F5pM9xcUCAJ/+NCHHMchhEJdCUIrAIn+ZxubWltaaIZZUVriZ2wlnx0VFQnIUm9QQAgxxlFRkcC/OkesXVFaQjNMa0tLU2NTGFqCcDTCx48fc9gdSUbjvKIiAID/MT0lJXWMWcNAEiGGPVxUlGQ0OuyO6uPHxpi7X5mGNHUKIV4Q6usbBFHIy8/XaDTEy0Y3CyEAwLTp0yJVqqC75IIgKCNV06ZPA/6pTvxdo9Hk5+eLolBf38DzAhXiEVkIUxdFEUDY2dHRfukSwzAPPvQg8LtZI8E3JydnSlaWy+UKoiNE5nnuvTcrJyeHNEX+vIVFEQDwwEMP0gzTfulS5+XLIMRRKIQCkLDbcr7l5o0b0TExubm5IJD4Q7airHp8tcvlCmJ2jKIol8u1avVqmqb9L0GIEABgem5udEzMzRs3zp8/D/zuswVH6AVoaXG7PXq9Pj0jAwQytiSVoKy8PDcvz2brD0gDiqJstv7cvLyyx8r9d3+feRkZGXq93u32tLa0gLtXAPIxHR3tgigYk43R0dEjzAcM+TrGmGXZP7+8I0LBcBznpwYURXEcFxHB/PnlHSzLBpFpdHS0MdkoCEJHRzsI8YRECAUgftfTY8EYG5OMIPBxDZkUmz59+quvv+71et1uN80wI79CM4zb7fZ6va++8fr06dPJdsSAMiVGGpOMAGCLxQICCZtBEKqkid/xPG+z2RBEWp2O/DXQdCiKEgRhYXHxO/veU6vV1r4+jDFN0xRFkY2eZOqYoiiapjHG1r4+tVr9zr73FhYXB7m0gjEAQKfTQYhu3rTxPE+qRcDp+Edo+1get9vtdEIEY2JjAADBfQTRYNbs2Z+dqF5TUUFRlNVqtdlsLpeL4ziO41wul81mI7M3ayoqPjtRPWv27KAXtoiRMTExEEG30+lxu4Oy2l9Ce0CD43mO5yGEZBdt0JDJMoPB8NLLOzZs3HDss2P19fVXLl+22+0AgOjo6EmpqSaTacEjC0hTP+pk36iwLAshJPaPJZ1RuUtOyNzqFGGM0zMyntq44amNG3ieHxgYAABERkb6TmeQgd4E2XjrD6EVgKFphqYxxm7POFRkEvHJyjCEkKZp305p3x/Hq+jJBj1i/7gkOByhTV3BsqxKJYpiv60fADAuvTlfEQ9uGMfd5W39/aIosiqVgh1T8ByVUAlAeg7ESTHGfb295K9BJ/izvTQQgp93z0nfkfzkI2jLAQB9vb0A47i4WNK5Ct1QIIQ1gLSEBoMeAmjuMoMg/JQcjhRFiFCgp4tEUfzpRYgCqnrESHOXGQCo1+vBeDTpIxBCAUiISEtLpyjKfNVst9v9HwyTmE5RFIIQIAQAcDgcHR0d7e3tVzo7u7u7b1y7PjAw4PV6AQARERGRkZHxCerExMRJKSnp6elpaWlRUVFg0CE9P5sHYp7dbjdfNVMUlZaWDkI8FRFCAUhBZ2dns6zCYrG0t7XdN3XqqAKQYEIKSxTF5u++q6ut+7qh4Ycffui1WJwDTkEUyNlThBBJCANAdtYCgClEqSJVOp1+yr1TZhQWPvjQg/9+333EfwenPBzEvPa2NovFwrKKrOxsEOKpiNALkJMTFx9vtVqbzp69b+rUETadDS6gS5cuHT185Nhnn/2jtXVgYICmaYVCwTBMXHwchHBIpyTtAsZYEISenu7Llzs+/eSTyMjIrKys+Y88smjJ4szMTDCaDMS8s2fP2vv7NRpNTk4OuHsFQAgBjFNSU9MzM7u7u0/X1q1Zs2bIL8eDjqaeOXPmrb17vzhx8vr16yzLKpVKpVKJb+3f93NxJiIigoykBEH4/vvvGxsbX9v96tyH562pWHv//feD4Y+sEvNO19ZxHJeemZmSmgoCmUwNgtAOWARRpGnKZCqkENXU2Gi1Wu9c5iYBmqKo5ubmirVrly9e8mHVB4IgaDQalUqFMfYdifE/X3zrwAzGWKVSaTQaQeAPVVUtX7ykYu3a5uZmiqKIPLe9hRCyWq2NjY0UokymQpqmhF/AmvD8+QuioqO6zOaT1dXg53OiZMbGbrf//oWti4of/fjIUSXLkjhDduuPPXey8R9CGBcfr2TZj48cXVT86O9f2Gq328ks0+AnAQAnq090mc1R0VFF8xeMPfdRCfGCJ0IY49z8vKzsbJ7jDlYd9C2P+MJOzZenFs5f8MrOnRRCcXFxot9xJlAEQRAxjouLoxB6ZefOhfMX1Hx5iswykepFrD1YVcVzXFZ2dl5+XkCLOcER2tTJzAHDMEuWLaUo+syZMw31DcS7Sb9wx0s7ysvKOtrbyR7mMGyJJVloNJqO9vbysrIdL+0gjQExqaG+4cyZMxRFL1m2lGEYP7cQjIWQhyDiQSUlpcZJyS6n87VXd5MRssPhWLe2Yvu2bZEqlVKp5EM86XgbPM8rlcpIlWr7tm3r1lY4HA4y4n1t926302mclLyipASEeCmGEPIMSFun0WpKy8sAhF+cOHm6rs5ms61YtuzwoUNarZbEolCbcSck8mi12sOHDq1Yusxms52uq/vi5EkAYWl5mVarJb2DUJsR3u3pc+d1m833TZtG0/SZr79O0CTwXFgdf0hohr5mvXb/jBk8z3/37beJRmP157+s7em+DU+bn3mGF4QfL1787tw5tVo9EUofAMBzvFqt/u7cuR8vXuQFYfMzz/i/gWzshOuI0i1Kli1vqK+PjY3lOC4M+foPwzA2m63QZKo69MEY51MDIuyH9C5cKJ6/wHc9SniyHhXf5SmfHDsW5kN64Vu6I3tMJk+e/Mft2/v7+0O95zIgKIT6+/v/+Kftk6dMDmIny1gIaymQkWdpedmmzZstfX3MaJt8wgPDMJa+vk2bN5eWhfuQMAj/hU2k04kQ2vDkfx7Y/75Or5O2MWAYptfSW1Je9tobrxPDwnypnAQ3ZpEceY5fv27d0SNH9DrJNGAYpre399eLF++prKQZGkhx+6sEgZh8JB3B7NlbWVJaarFYyNxkmG2gKKrHYikpLd2zt5KOYIAUpQ+kujsaQggwZhjmjT1vbtq8+fr16+EMvqQpun79+n9t3vz6njcZhgGhXHYfGSkv7SNZQwj3vfve1i1b7A5HbGxsoFP/AUEc32azRUdF/WHbtsdWrfTZEKIcRzdJ2s64b1L6H62t//s/z9acOhUdFaVg2XGXgRS9x+22Oxz/8atfvfin7fdmZU2Eq1wn3LWVu3ft6uzsjImOVigU5BarMSaOEEIIeTyefrs9JSVl46ZNE+raygkhALjj4tb39+3vMpuVrFKpUkKEcOBKIITIiy6ny+V2GY3G0sfK5YtbR+G2q4sPH/qwtaXF6/EoWJZlWdJZInNK4Oc7I3x75cgDgiC43W6P2x2hUGRlZy9ZtlS+uthf8B2Xd1cfr66v/6rtx0v9/f3kJwIadHn34GtEEUIxMTEZ92SaTDOL5hfJl3cHAx7q+vrz359vbWlpb2/v6em5efOm2+UkE9o0Q7NKVVxcnMFgSE9Pz8rOzvk3+fr68QBj+T9wmCDI/4XJRONOsyeym4/A3SrAL4YJ0Rf+V0YWQGJkASRGFkBiZAEkRhZAYmQBJEYWQGJkASRGFkBiZAEkRhZAYmQBJEYWQGJkASRGFkBiZAEkRhZAYmQBJEYWQGJkASRGFkBiZAEkRhZAYmQBJEYWQGJkASRGFkBi/h9tdFPn2VAvOgAAAABJRU5ErkJggg==" alt="Kont" style="width:22px;height:22px;border-radius:50%;object-fit:cover;display:block;background:#fff;"></span>Kont
         </div>
     </nav>
@@ -945,6 +1012,56 @@
                 <span id="orderBtnTotal">0 G</span>
             </button>
         </div>
+    </div>
+
+    <!-- ===== PAJ KONT (ACCOUNT / LOGIN INFO) ===== -->
+    <div id="accountPage">
+        <main>
+            <div class="ac-header">
+                <button class="ac-back-btn" onclick="closeAccount()">←</button>
+                <h1>Kont Mwen</h1>
+            </div>
+
+            <div class="ac-avatar-wrap">
+                <div class="ac-avatar" id="acAvatarInitial">?</div>
+                <div class="ac-name" id="acName">—</div>
+                <div class="ac-sub">Enfòmasyon kont ou</div>
+            </div>
+
+            <div class="ac-card">
+                <div class="ac-row">
+                    <div class="ac-icon">👤</div>
+                    <div class="ac-field">
+                        <div class="ac-label">Non Konplè</div>
+                        <div class="ac-value" id="acFullName">—</div>
+                    </div>
+                </div>
+                <div class="ac-row">
+                    <div class="ac-icon">📞</div>
+                    <div class="ac-field">
+                        <div class="ac-label">Telefòn / Idantifyan</div>
+                        <div class="ac-value" id="acPhone">—</div>
+                    </div>
+                </div>
+                <div class="ac-row">
+                    <div class="ac-icon">📍</div>
+                    <div class="ac-field">
+                        <div class="ac-label">Adrès Livrezon</div>
+                        <div class="ac-value" id="acAddress">—</div>
+                    </div>
+                </div>
+                <div class="ac-row">
+                    <div class="ac-icon">🔒</div>
+                    <div class="ac-field">
+                        <div class="ac-label">Modpas</div>
+                        <div class="ac-value" id="acPass">••••••••</div>
+                    </div>
+                    <button class="ac-toggle" id="acPassToggle" onclick="togglePassVisibility()">Gade</button>
+                </div>
+            </div>
+
+            <button class="ac-logout-btn" onclick="logoutAccount()">Dekonekte</button>
+        </main>
     </div>
 
 </div>
@@ -1031,6 +1148,53 @@
         document.getElementById('homeNav').style.display = '';
         window.scrollTo(0,0);
     }
+    let acPassVisible = false;
+    let acRealPass = '';
+
+    function openAccount(){
+        const id = localStorage.getItem('kapeats_current');
+        const users = JSON.parse(localStorage.getItem('kapeats_users') || '{}');
+        const user = users[id] || { name: id || 'Itilizatè', phone: id || '—', address: '—', pass: '' };
+
+        document.getElementById('acName').textContent = user.name || '—';
+        document.getElementById('acFullName').textContent = user.name || '—';
+        document.getElementById('acPhone').textContent = user.phone || id || '—';
+        document.getElementById('acAddress').textContent = user.address || '—';
+        acRealPass = user.pass || '';
+        acPassVisible = false;
+        document.getElementById('acPass').textContent = '••••••••';
+        document.getElementById('acPassToggle').textContent = 'Gade';
+
+        const initial = (user.name || id || '?').trim().charAt(0).toUpperCase();
+        document.getElementById('acAvatarInitial').textContent = initial || '?';
+
+        document.getElementById('homeMain').style.display = 'none';
+        document.getElementById('homeNav').style.display = 'none';
+        document.getElementById('accountPage').style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    function closeAccount(){
+        document.getElementById('accountPage').style.display = 'none';
+        document.getElementById('homeMain').style.display = '';
+        document.getElementById('homeNav').style.display = '';
+        window.scrollTo(0,0);
+    }
+
+    function togglePassVisibility(){
+        acPassVisible = !acPassVisible;
+        document.getElementById('acPass').textContent = acPassVisible ? (acRealPass || '—') : '••••••••';
+        document.getElementById('acPassToggle').textContent = acPassVisible ? 'Kache' : 'Gade';
+    }
+
+    function logoutAccount(){
+        localStorage.removeItem('kapeats_current');
+        document.getElementById('accountPage').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('authPage').style.display = '';
+        window.scrollTo(0,0);
+    }
+
     function openCart(){
         renderCartPage();
         document.getElementById('restaurantPage').style.display = 'none';
