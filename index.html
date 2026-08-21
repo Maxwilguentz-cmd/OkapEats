@@ -16,8 +16,10 @@
         --text:#25324A;
         --muted:#8A8F9C;
         --border:#ECE5D6;
+        --app-max-width:460px;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
+    html{ -webkit-text-size-adjust:100%; }
     body{
         font-family:'Helvetica Neue', Arial, sans-serif;
         background:#EAE2D2;
@@ -25,16 +27,19 @@
         display:flex;
         justify-content:center;
         min-height:100vh;
+        min-height:100dvh;
     }
     .app{
         width:100%;
-        max-width:460px;
+        max-width:var(--app-max-width);
         background:var(--cream);
         min-height:100vh;
+        min-height:100dvh;
         display:flex;
         flex-direction:column;
         position:relative;
         box-shadow:0 0 60px rgba(0,0,0,0.15);
+        transition:max-width .2s ease;
     }
     main{ flex:1 1 auto; }
 
@@ -365,9 +370,63 @@
     .nav-item.fab .icon::after{ width:3px; height:18px; }
     .nav-item.fab{ color:var(--navy-light); }
 
-    @media (min-width:480px){
-        body{ padding:24px 0; }
+    /* ---------- RESPONSIF: TÈLÈFÒN / TABLÈT / PC ----------
+       Sit la ekri kòm yon "app kat" (fenèt selil telefòn) ki rete
+       lizib sou tout gwosè ekran. Anba 600px li pran tout lajè
+       ekran an (tankou yon app natif); pi wo pase sa li vin yon
+       kat santre ki grandi ak ekran an, ak yon background otou l. */
+
+    /* Tablèt (≥600px) */
+    @media (min-width:600px){
+        :root{ --app-max-width:480px; }
+        body{ padding:28px 0; background:linear-gradient(160deg,#EAE2D2,#DDD2B8); }
         .app{ border-radius:28px; overflow:hidden; min-height:auto; }
+        .rc-order-bar, .rd-cart-bar{ border-radius:16px 16px 0 0; }
+    }
+
+    /* Tablèt an mòd peyizaj / ti laptop (≥900px) */
+    @media (min-width:900px){
+        :root{ --app-max-width:520px; }
+        body{ padding:40px 0; align-items:flex-start; }
+        .app{
+            margin-top:0;
+            box-shadow:0 20px 70px rgba(27,42,74,0.28);
+        }
+    }
+
+    /* Desktop / PC (≥1200px) */
+    @media (min-width:1200px){
+        :root{ --app-max-width:560px; }
+        body{
+            align-items:center;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(232,115,74,0.12), transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(27,42,74,0.15), transparent 40%),
+                linear-gradient(160deg,#EAE2D2,#D8CBA9);
+        }
+        .app{ border-radius:32px; }
+        header{ padding-left:26px; padding-right:26px; }
+        section{ padding-left:26px; padding-right:26px; }
+        .hero-wrap{ padding-left:26px; padding-right:26px; }
+        .rd-tabs, .rd-meta-row, section.rd-menu, .rc-list, .rc-header,
+        .ac-header, .auth-body{ padding-left:26px; padding-right:26px; }
+    }
+
+    /* Trè laj (≥1500px) : mete yon ti dekor otou app la */
+    @media (min-width:1500px){
+        body::before{
+            content:'';
+            position:fixed; inset:0;
+            background:inherit;
+            z-index:-1;
+        }
+    }
+
+    /* Ti telefòn (≤360px) : diminye espasman pou tout antre */
+    @media (max-width:360px){
+        .hero-wrap, section, header{ padding-left:14px; padding-right:14px; }
+        .hero-text h1{ font-size:0.92rem; }
+        .rest-thumb{ width:66px; height:66px; }
     }
 
     /* ===== ESTIL PAJ DETAY RESTORAN (Boucanier) ===== */
@@ -469,7 +528,7 @@
     /* ---------- CART BAR ---------- */
     .rd-cart-bar{
         position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-        width:100%; max-width:460px;
+        width:100%; max-width:var(--app-max-width);
         background:var(--orange); color:#fff;
         padding:14px 18px; display:none;
         align-items:center; justify-content:space-between;
@@ -545,7 +604,7 @@
 
     .rc-order-bar{
         position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-        width:100%; max-width:460px;
+        width:100%; max-width:var(--app-max-width);
         background:var(--card); padding:14px 18px;
         border-top:1px solid var(--border);
         box-shadow:0 -4px 14px rgba(0,0,0,0.08);
